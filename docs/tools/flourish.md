@@ -1,5 +1,5 @@
 ---
-id: tools/flourish
+id: flourish
 title: Flourish
 ---
 
