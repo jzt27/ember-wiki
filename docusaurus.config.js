@@ -64,19 +64,23 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
-          {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Docs',
-          },
-          {to: '/blog', label: 'Updates', position: 'left'},
-          {
-            href: 'https://github.com/jzt27/ember-wiki',
-            label: 'GitHub',
-            position: 'right',
-          },
-        ],
+  {
+    type: 'docSidebar',
+    sidebarId: 'tutorialSidebar',
+    position: 'left',
+    label: 'Docs',
+  },
+  {
+    to: '/blog',
+    label: 'Updates',
+    position: 'left',
+  },
+  {
+    href: 'https://github.com/jzt27/ember-wiki',
+    label: 'GitHub',
+    position: 'right',
+  },
+],
       },
       footer: {
         style: 'dark',

@@ -1,30 +1,108 @@
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
-/* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-font-family-base: 'Poppins', sans-serif;
+  --ifm-heading-font-family: 'Poppins', sans-serif;
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+:root {
+  --ifm-color-primary: #13ce74;
+  --ifm-color-primary-dark: #12b868;
+  --ifm-color-primary-darker: #11ad62;
+  --ifm-color-primary-darkest: #0e8e50;
+  --ifm-color-primary-light: #1de987;
+  --ifm-color-primary-lighter: #33eba4;
+  --ifm-color-primary-lightest: #67f1be;
+
+  --ifm-background-color: #eceff5;
+  --ifm-background-surface-color: #ffffff;
+  --ifm-navbar-background-color: #eceff5;
+  --ifm-footer-background-color: #192238;
+
+  --ifm-font-family-base: 'Poppins', sans-serif;
+  --ifm-font-family-monospace: monospace;
+
+  --ifm-heading-color: #192238;
+  --ifm-font-color-base: #414f6f;
+  --ifm-link-color: #13ce74;
+  --ifm-menu-color-active: #13ce74;
+  --ifm-code-font-size: 95%;
+  --ifm-border-color: #d6dbe9;
+
+  --ifm-hero-background-color: #eceff5;
+  --ifm-hero-text-color: #192238;
+
+  --ifm-card-background-color: #ffffff;
+  --ifm-toc-border-color: #d6dbe9;
+
+  --docusaurus-highlighted-code-line-bg: rgba(19, 206, 116, 0.08);
+}
+
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #1de987;
+  --ifm-color-primary-dark: #13ce74;
+  --ifm-color-primary-darker: #12b868;
+  --ifm-color-primary-darkest: #0e8e50;
+  --ifm-color-primary-light: #52ef9f;
+  --ifm-color-primary-lighter: #7df3b8;
+  --ifm-color-primary-lightest: #a7f7d0;
+
+  --ifm-background-color: #192238;
+  --ifm-background-surface-color: #414f6f;
+  --ifm-navbar-background-color: #192238;
+  --ifm-footer-background-color: #192238;
+
+  --ifm-heading-color: #eceff5;
+  --ifm-font-color-base: #d6dbe9;
+  --ifm-link-color: #1de987;
+  --ifm-menu-color-active: #1de987;
+  --ifm-border-color: #626e88;
+
+  --ifm-hero-background-color: #192238;
+  --ifm-hero-text-color: #eceff5;
+
+  --ifm-card-background-color: #414f6f;
+  --ifm-toc-border-color: #626e88;
+
+  --docusaurus-highlighted-code-line-bg: rgba(29, 233, 135, 0.15);
+}
+
+html, body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.hero {
+  background: linear-gradient(135deg, #eceff5 0%, #d6dbe9 100%);
+}
+
+[data-theme='dark'] .hero {
+  background: linear-gradient(135deg, #192238 0%, #414f6f 100%);
+}
+
+.navbar {
+  box-shadow: none;
+  border-bottom: 1px solid var(--ifm-border-color);
+}
+
+.footer {
+  color: #eceff5;
+}
+
+.button.button--secondary {
+  background-color: #13ce74;
+  border-color: #13ce74;
+  color: #192238;
+  font-weight: 600;
+}
+
+.button.button--secondary:hover {
+  background-color: #1de987;
+  border-color: #1de987;
+  color: #192238;
+}
+
+.card {
+  border: 1px solid var(--ifm-border-color);
+  box-shadow: none;
+  border-radius: 16px;
 }
