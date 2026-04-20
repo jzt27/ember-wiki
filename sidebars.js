@@ -1,25 +1,25 @@
 const sidebars = {
   tutorialSidebar: [
     'intro',
-    'roles-responsibilities',
+    'ten-minute-chart-checklist',
     'ember-core-principles',
     'data-viz-learning-journey',
-    'choosing-the-right-chart',
-    'chart-standards-in-detail',
-    '10-minute-chart-checklist',
     'ai-agents-for-dataviz',
+    'roles-responsibilities',
+    'chart-standards-in-detail',
+    'choosing-the-right-chart',
     {
       type: 'category',
-      label: 'Tools',
+      label: 'How to: Data viz tools',
       items: [
-        'tools/affinity-advanced',
         'tools/flourish',
         'tools/r',
+        'tools/affinity-advanced',
       ],
     },
     {
       type: 'category',
-      label: 'Advanced',
+      label: 'Advanced visual storytelling',
       items: [
         'advanced/maps',
         'advanced/project-examples',

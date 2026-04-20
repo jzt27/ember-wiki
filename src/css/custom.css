@@ -106,3 +106,52 @@ html, body {
   box-shadow: none;
   border-radius: 16px;
 }
+
+/* Sidebar base styling */
+.menu__link {
+  font-size: 14px;
+  font-weight: 400;
+  color: #4b5563;
+  border-radius: 6px;
+}
+
+/* Hover effect */
+.menu__link:hover {
+  color: #16a34a;
+}
+
+/* Active page */
+.menu__link--active {
+  color: #111827;
+  font-weight: 500;
+  background-color: #f3f4f6;
+  border-radius: 6px;
+}
+
+/* Welcome page only */
+.menu__list-item:first-child > .menu__link {
+  font-size: 17px;
+  font-weight: 600;
+  color: #16a34a;
+}
+
+/* Keep welcome green when active */
+.menu__list-item:first-child > .menu__link.menu__link--active {
+  color: #16a34a;
+}
+
+/* Do not apply welcome styling to first items inside categories */
+.menu__list .menu__list .menu__list-item:first-child > .menu__link {
+  font-size: 14px;
+  font-weight: 400;
+  color: #4b5563;
+}
+
+/* Category labels */
+.menu__list-item-collapsible > .menu__link {
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+}
