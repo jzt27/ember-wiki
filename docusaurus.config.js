@@ -53,6 +53,21 @@ const config = {
     ],
   ],
 
+  themes: [
+    [
+      '@easyops-cn/docusaurus-search-local',
+      {
+        hashed: true,
+        indexDocs: true,
+        indexBlog: true,
+        indexPages: true,
+        docsRouteBasePath: '/',
+        blogRouteBasePath: '/updates',
+        language: 'en',
+      },
+    ],
+  ],
+
   themeConfig: ({
     image: 'img/docusaurus-social-card.jpg',
     colorMode: {

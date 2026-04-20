@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import Layout from '@theme/Layout';
 
 const checklist = [
   {
@@ -86,24 +85,36 @@ const colours = {
   green: '#13ce74',
   greenDark: '#12b868',
   greenLight: '#e9fbf1',
+  red: '#e5484d',
+  redDark: '#cf3c41',
+  redLight: '#fdeeee',
   navy: '#192238',
   bg: '#eceff5',
   white: '#ffffff',
   border: '#d9e1ea',
   textMuted: '#5f6b7a',
+  neutralDot: '#c7d0db',
 };
 
 function styles() {
+  
   return {
+    progressMessage: {
+  fontSize: '14px',
+  color: colours.textMuted,
+  margin: '0 0 10px 0',
+  lineHeight: 1.5,
+},
     page: {
       backgroundColor: colours.bg,
-      minHeight: '100vh',
       padding: '32px 20px',
       fontFamily: 'Poppins, sans-serif',
+      borderRadius: '24px',
     },
     container: {
       maxWidth: '960px',
       margin: '0 auto',
+      position: 'relative',
     },
     heroCard: {
       backgroundColor: colours.white,
@@ -111,18 +122,9 @@ function styles() {
       borderRadius: '24px',
       padding: '28px',
       boxShadow: '0 4px 16px rgba(25, 34, 56, 0.06)',
-      marginBottom: '24px',
+      marginBottom: '20px',
     },
-    badge: {
-      display: 'inline-block',
-      backgroundColor: colours.green,
-      color: colours.navy,
-      borderRadius: '999px',
-      padding: '6px 12px',
-      fontSize: '14px',
-      fontWeight: 600,
-      marginBottom: '14px',
-    },
+
     h1: {
       fontSize: '36px',
       lineHeight: 1.2,
@@ -133,7 +135,59 @@ function styles() {
       color: colours.textMuted,
       fontSize: '16px',
       lineHeight: 1.6,
-      marginBottom: '20px',
+      marginBottom: '0',
+    },
+    stickyBarWrap: {
+  position: 'sticky',
+  top: '80px',
+  zIndex: 50,
+  marginBottom: '12px',
+},
+
+stickyBarCard: {
+  backgroundColor: 'rgba(255, 255, 255, 0.98)',
+  backdropFilter: 'blur(6px)',
+  border: `1px solid ${colours.border}`,
+  borderRadius: '18px',
+  padding: '14px 18px',
+  boxShadow: '0 8px 24px rgba(25, 34, 56, 0.10)',
+  boxSizing: 'border-box',
+},
+progressHeaderRow: {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  gap: '16px',
+  flexWrap: 'wrap',
+  marginBottom: '12px',
+},
+
+progressHeaderRight: {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '12px',
+  flexWrap: 'wrap',
+},
+
+clearAllButton: {
+  backgroundColor: colours.white,
+  color: colours.navy,
+  border: `1px solid ${colours.border}`,
+  borderRadius: '999px',
+  padding: '8px 14px',
+  fontWeight: 600,
+  cursor: 'pointer',
+  whiteSpace: 'nowrap',
+},
+    progressCard: {
+      backgroundColor: 'rgba(255, 255, 255, 0.98)',
+      backdropFilter: 'blur(6px)',
+      border: `1px solid ${colours.border}`,
+      borderRadius: '20px',
+      padding: '18px 20px',
+      boxShadow: '0 8px 24px rgba(25, 34, 56, 0.10)',
+      width: '100%',
+      boxSizing: 'border-box',
     },
     progressRow: {
       display: 'flex',
@@ -154,12 +208,36 @@ function styles() {
     },
     progressBarOuter: {
       width: '100%',
-      height: '12px',
+      height: '14px',
       backgroundColor: '#dfe6ee',
       borderRadius: '999px',
       overflow: 'hidden',
       marginBottom: '16px',
     },
+
+    progressStack: {
+  display: 'flex',
+  width: '100%',
+  height: '100%',
+},
+
+progressAchieved: (percent) => ({
+  width: `${percent}%`,
+  backgroundColor: colours.green,
+  transition: 'width 0.2s ease',
+}),
+
+progressNotYet: (percent) => ({
+  width: `${percent}%`,
+  backgroundColor: colours.red,
+  transition: 'width 0.2s ease',
+}),
+
+progressUnmarked: (percent) => ({
+  width: `${percent}%`,
+  backgroundColor: '#dfe6ee',
+}),
+
     progressBarInner: (percent) => ({
       width: `${percent}%`,
       height: '100%',
@@ -168,10 +246,11 @@ function styles() {
       transition: 'width 0.2s ease',
     }),
     buttonRow: {
-      display: 'flex',
-      gap: '10px',
-      flexWrap: 'wrap',
-    },
+  display: 'flex',
+  justifyContent: 'flex-end',
+  gap: '10px',
+  flexWrap: 'wrap',
+},
     primaryButton: {
       backgroundColor: colours.green,
       color: colours.navy,
@@ -221,30 +300,69 @@ function styles() {
       color: colours.textMuted,
       fontWeight: 600,
     },
-    itemButton: (checked) => ({
-      width: '100%',
-      textAlign: 'left',
-      backgroundColor: checked ? colours.greenLight : colours.white,
-      border: `1px solid ${checked ? colours.green : colours.border}`,
-      borderRadius: '20px',
-      padding: '18px',
-      marginBottom: '14px',
-      cursor: 'pointer',
-    }),
-    itemRow: {
+    itemCard: (status) => {
+      let backgroundColor = colours.white;
+      let borderColor = colours.border;
+
+      if (status === 'achieved') {
+        backgroundColor = colours.greenLight;
+        borderColor = colours.green;
+      }
+
+      if (status === 'not_yet') {
+        backgroundColor = colours.redLight;
+        borderColor = colours.red;
+      }
+
+      return {
+        width: '100%',
+        textAlign: 'left',
+        backgroundColor,
+        border: `1px solid ${borderColor}`,
+        borderRadius: '20px',
+        padding: '18px',
+        marginBottom: '14px',
+        boxSizing: 'border-box',
+      };
+    },
+    itemTopRow: {
       display: 'flex',
       gap: '14px',
       alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      flexWrap: 'wrap',
     },
-    icon: (checked) => ({
-      width: '24px',
-      height: '24px',
-      borderRadius: '999px',
-      flexShrink: 0,
-      marginTop: '2px',
-      backgroundColor: checked ? colours.green : '#c7d0db',
-      border: checked ? `1px solid ${colours.greenDark}` : '1px solid #c7d0db',
-    }),
+    itemLeft: {
+      display: 'flex',
+      gap: '14px',
+      alignItems: 'flex-start',
+      flex: '1 1 520px',
+      minWidth: 0,
+    },
+    icon: (status) => {
+      let backgroundColor = colours.neutralDot;
+      let border = `1px solid ${colours.neutralDot}`;
+
+      if (status === 'achieved') {
+        backgroundColor = colours.green;
+        border = `1px solid ${colours.greenDark}`;
+      }
+
+      if (status === 'not_yet') {
+        backgroundColor = colours.red;
+        border = `1px solid ${colours.redDark}`;
+      }
+
+      return {
+        width: '24px',
+        height: '24px',
+        borderRadius: '999px',
+        flexShrink: 0,
+        marginTop: '2px',
+        backgroundColor,
+        border,
+      };
+    },
     itemTitle: {
       fontSize: '16px',
       lineHeight: 1.5,
@@ -258,84 +376,113 @@ function styles() {
       color: colours.textMuted,
       margin: 0,
     },
-    footerNote: {
-      backgroundColor: colours.white,
-      border: `1px solid ${colours.border}`,
-      borderRadius: '20px',
-      padding: '20px',
-      color: colours.textMuted,
-      lineHeight: 1.6,
-      boxShadow: '0 4px 16px rgba(25, 34, 56, 0.06)',
+    statusButtons: {
+      display: 'flex',
+      gap: '8px',
+      flexWrap: 'wrap',
+      alignItems: 'flex-start',
     },
+    achievedButton: (active) => ({
+      backgroundColor: active ? colours.green : colours.white,
+      color: active ? colours.navy : colours.navy,
+      border: `1px solid ${active ? colours.green : colours.border}`,
+      borderRadius: '999px',
+      padding: '8px 14px',
+      fontWeight: 600,
+      cursor: 'pointer',
+      whiteSpace: 'nowrap',
+    }),
+    notYetButton: (active) => ({
+      backgroundColor: active ? colours.red : colours.white,
+      color: active ? colours.white : colours.navy,
+      border: `1px solid ${active ? colours.red : colours.border}`,
+      borderRadius: '999px',
+      padding: '8px 14px',
+      fontWeight: 600,
+      cursor: 'pointer',
+      whiteSpace: 'nowrap',
+    }),
   };
 }
 
 function EmberChartChecklistApp() {
+  const getProgressMessage = () => {
+  if (achievedCount === 0) return 'Start by reviewing each part of the chart.';
+  if (achievedCount <= 4) return 'Good start. Keep working through the checklist.';
+  if (achievedCount <= 8) return 'Getting there. Most of the chart is in place.';
+  if (achievedCount <= 11) return 'Final touches. Almost ready for review.';
+  if (achievedCount === total) return 'All done. Ready for the data visualisation team to review.';
+};
   const s = styles();
 
   const allItems = useMemo(() => checklist.flatMap((section) => section.items), []);
   const initialState = useMemo(
-    () => Object.fromEntries(allItems.map((item) => [item.id, false])),
+    () => Object.fromEntries(allItems.map((item) => [item.id, 'unmarked'])),
     [allItems]
   );
 
-  const [checked, setChecked] = useState(initialState);
+  const [statusMap, setStatusMap] = useState(initialState);
 
-  const completed = Object.values(checked).filter(Boolean).length;
-  const total = allItems.length;
-  const progress = Math.round((completed / total) * 100);
+const achievedCount = Object.values(statusMap).filter((s) => s === 'achieved').length;
+const notYetCount = Object.values(statusMap).filter((s) => s === 'not_yet').length;
+const total = allItems.length;
 
-  const toggleItem = (id) => {
-    setChecked((prev) => ({
+const achievedPercent = (achievedCount / total) * 100;
+const notYetPercent = (notYetCount / total) * 100;
+const unmarkedPercent = 100 - achievedPercent - notYetPercent;
+
+  const setStatus = (id, status) => {
+    setStatusMap((prev) => ({
       ...prev,
-      [id]: !prev[id],
+      [id]: prev[id] === status ? 'unmarked' : status,
     }));
   };
 
-  const markAll = () => {
-    setChecked(Object.fromEntries(allItems.map((item) => [item.id, true])));
-  };
-
   const clearAll = () => {
-    setChecked(initialState);
+    setStatusMap(initialState);
   };
 
   const getSectionStats = (items) => {
-    const done = items.filter((item) => checked[item.id]).length;
-    return `${done}/${items.length} complete`;
+    const achieved = items.filter((item) => statusMap[item.id] === 'achieved').length;
+    return `${achieved}/${items.length} achieved`;
   };
+return (
+  <div style={s.page}>
+    <div style={s.container}>
+      <div style={s.heroCard}>
+        <h1 style={s.h1}>Run through this checklist before publishing a chart</h1>
+        <p style={s.intro}>
+          <strong style={{ color: colours.navy }}>How to use this:</strong> mark each item as
+          either achieved or not yet. Use it for your own charts or when reviewing someone else’s.
+        </p>
+      </div>
 
-  return (
-    <div style={s.page}>
-      <div style={s.container}>
-        <div style={s.heroCard}>
-          <div style={s.badge}>Ember chart review</div>
-          <h1 style={s.h1}>Run through this checklist before publishing a chart.</h1>
-          <p style={s.intro}>
-            This interactive version turns the team’s ten-minute chart checklist into a simple
-            review tool. Use it for your own charts or when reviewing someone else’s.
-          </p>
-
-          <div style={s.progressRow}>
-            <div style={s.progressLabel}>Progress</div>
-            <div style={s.progressText}>
-              {completed} of {total} checks complete
-            </div>
-          </div>
-
-          <div style={s.progressBarOuter}>
-            <div style={s.progressBarInner(progress)} />
-          </div>
-
-          <div style={s.buttonRow}>
-            <button style={s.primaryButton} onClick={markAll}>
-              Mark all done
-            </button>
-            <button style={s.secondaryButton} onClick={clearAll}>
-              Clear all
-            </button>
-          </div>
+       <div style={s.stickyBarWrap}>
+  <div style={s.stickyBarCard}>
+    <div style={s.progressHeaderRow}>
+      <div style={s.progressLabel}>Progress</div>
+      <div style={s.progressHeaderRight}>
+        <div style={s.progressText}>
+          {achievedCount} achieved · {notYetCount} not yet
         </div>
+        <button style={s.clearAllButton} onClick={clearAll}>
+          Clear all
+        </button>
+      </div>
+    </div>
+    <p style={s.progressMessage}>
+  {getProgressMessage()}
+</p>
+
+    <div style={s.progressBarOuter}>
+      <div style={s.progressStack}>
+        <div style={s.progressAchieved(achievedPercent)} />
+        <div style={s.progressNotYet(notYetPercent)} />
+        <div style={s.progressUnmarked(unmarkedPercent)} />
+      </div>
+    </div>
+  </div>
+</div>
 
         {checklist.map((section) => (
           <div key={section.section} style={s.sectionCard}>
@@ -348,32 +495,41 @@ function EmberChartChecklistApp() {
             </div>
 
             {section.items.map((item) => {
-              const isChecked = checked[item.id];
+              const status = statusMap[item.id];
 
               return (
-                <button
-                  key={item.id}
-                  style={s.itemButton(isChecked)}
-                  onClick={() => toggleItem(item.id)}
-                >
-                  <div style={s.itemRow}>
-                    <div style={s.icon(isChecked)} />
-                    <div>
-                      <p style={s.itemTitle}>{item.title}</p>
-                      <p style={s.itemHelp}>{item.help}</p>
+                <div key={item.id} style={s.itemCard(status)}>
+                  <div style={s.itemTopRow}>
+                    <div style={s.itemLeft}>
+                      <div style={s.icon(status)} />
+                      <div>
+                        <p style={s.itemTitle}>{item.title}</p>
+                        <p style={s.itemHelp}>{item.help}</p>
+                      </div>
+                    </div>
+
+                    <div style={s.statusButtons}>
+                      <button
+                        type="button"
+                        style={s.achievedButton(status === 'achieved')}
+                        onClick={() => setStatus(item.id, 'achieved')}
+                      >
+                        Achieved
+                      </button>
+                      <button
+                        type="button"
+                        style={s.notYetButton(status === 'not_yet')}
+                        onClick={() => setStatus(item.id, 'not_yet')}
+                      >
+                        Not yet
+                      </button>
                     </div>
                   </div>
-                </button>
+                </div>
               );
             })}
           </div>
         ))}
-
-        <div style={s.footerNote}>
-          <strong style={{ color: colours.navy }}>How to use this:</strong> click each item once it
-          has been checked. This version is intentionally simple so it works cleanly inside
-          Docusaurus without any extra packages.
-        </div>
       </div>
     </div>
   );
