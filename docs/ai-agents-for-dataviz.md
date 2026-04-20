@@ -1,5 +1,5 @@
 ---
-title: [TBC] AI agents for data viz
+title: AI agents for data viz
 ---
 
-# [TBC] AI agents for data viz
+# AI agents for data viz
