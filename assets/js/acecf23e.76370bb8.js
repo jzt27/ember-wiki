@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkember_wiki=self.webpackChunkember_wiki||[]).push([["3220"],{1912(e){e.exports=JSON.parse('{"blogBasePath":"/ember-wiki/updates","blogTitle":"Blog","authorsListPath":"/ember-wiki/updates/authors"}')}}]);
