@@ -30,10 +30,12 @@ const config = {
       'classic',
       ({
         docs: {
+          routeBasePath: '/',
           sidebarPath: './sidebars.js',
           editUrl: 'https://github.com/jzt27/ember-wiki/tree/main/',
         },
         blog: {
+          routeBasePath: '/updates',
           showReadingTime: true,
           feedOptions: {
             type: ['rss', 'atom'],
@@ -51,70 +53,69 @@ const config = {
     ],
   ],
 
-  themeConfig:
-    ({
-      image: 'img/docusaurus-social-card.jpg',
-      colorMode: {
-        respectPrefersColorScheme: true,
+  themeConfig: ({
+    image: 'img/docusaurus-social-card.jpg',
+    colorMode: {
+      respectPrefersColorScheme: true,
+    },
+    navbar: {
+      title: 'Ember Wiki',
+      logo: {
+        alt: 'Ember Wiki Logo',
+        src: 'img/logo.svg',
       },
-      navbar: {
-        title: 'Ember Wiki',
-        logo: {
-          alt: 'Ember Wiki Logo',
-          src: 'img/logo.svg',
+      items: [
+        {
+          type: 'docSidebar',
+          sidebarId: 'tutorialSidebar',
+          position: 'left',
+          label: 'Wiki',
         },
-        items: [
-  {
-    type: 'docSidebar',
-    sidebarId: 'tutorialSidebar',
-    position: 'left',
-    label: 'Docs',
-  },
-  {
-    to: '/blog',
-    label: 'Updates',
-    position: 'left',
-  },
-  {
-    href: 'https://github.com/jzt27/ember-wiki',
-    label: 'GitHub',
-    position: 'right',
-  },
-],
-      },
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Intro',
-                to: '/docs/intro',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Updates',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/jzt27/ember-wiki',
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} Ember Wiki. Built with Docusaurus.`,
-      },
-      prism: {
-        theme: prismThemes.github,
-        darkTheme: prismThemes.dracula,
-      },
-    }),
+        {
+          to: '/updates',
+          label: 'Updates',
+          position: 'left',
+        },
+        {
+          href: 'https://github.com/jzt27/ember-wiki',
+          label: 'GitHub',
+          position: 'right',
+        },
+      ],
+    },
+    footer: {
+      style: 'dark',
+      links: [
+        {
+          title: 'Wiki',
+          items: [
+            {
+              label: 'Welcome',
+              to: '/',
+            },
+          ],
+        },
+        {
+          title: 'More',
+          items: [
+            {
+              label: 'Updates',
+              to: '/updates',
+            },
+            {
+              label: 'GitHub',
+              href: 'https://github.com/jzt27/ember-wiki',
+            },
+          ],
+        },
+      ],
+      copyright: `Copyright © ${new Date().getFullYear()} Ember Wiki. Built with Docusaurus.`,
+    },
+    prism: {
+      theme: prismThemes.github,
+      darkTheme: prismThemes.dracula,
+    },
+  }),
 };
 
 export default config;
